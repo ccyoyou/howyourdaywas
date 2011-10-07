@@ -11,5 +11,11 @@ import java.util.List;
  *
  */
 public interface DataSource {
+	
+	/**
+	 * Gets data from the data source. May block.
+	 * 
+	 * @return
+	 */
 	public List<String> getData();
 }

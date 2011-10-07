@@ -1,4 +1,8 @@
+import java.util.List;
+
 import processing.core.PApplet;
+import edu.umich.eecs498f11.howyourdaywas.DataSource;
+import edu.umich.eecs498f11.howyourdaywas.TwitterSource;
 
 public class HowYourDayWasSketch extends PApplet {
 
@@ -11,6 +15,14 @@ public class HowYourDayWasSketch extends PApplet {
 	public void setup() {
 		// TODO
 		// for display, we'll likely steal a lot of the fonts and full-screen stuff from cdzombak's NoiseSketch (in processing-exercises)
+		
+		// Example Twitter usage:
+		final DataSource twitter = new TwitterSource();
+		final List<String> tweets = twitter.getData();
+		
+		for (final String tweet : tweets) {
+			System.out.println(tweet);
+		}
 	}
 	
 	public void draw() {
