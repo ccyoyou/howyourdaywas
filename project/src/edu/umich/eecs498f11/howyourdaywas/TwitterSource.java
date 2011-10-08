@@ -30,7 +30,6 @@ public class TwitterSource implements DataSource {
 	 * 
 	 * blocks.
 	 */
-	@Override
 	public List<String> getData() {
 		final ArrayList<String> tweets = new ArrayList<String>();
 		
