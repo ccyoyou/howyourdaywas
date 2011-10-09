@@ -12,31 +12,22 @@ public class FacebookSource implements DataSource {
 	
 	FacebookClient fbClient = new DefaultFacebookClient("AAACEdEose0cBAOribywQZBP7YLqBjqDD7uw1gqymDB1TSgF9sNSALbWHPGRmeWVVNag4cDCxe4b8kphOVfyWwCuwlBJHPua6GRlRgRZBYYP6vIE5dT");
 	
-
-	
 	public List<String> getData() {
-		
 		final Calendar twentyFourHoursAgo = Calendar.getInstance();
 		twentyFourHoursAgo.add(Calendar.HOUR, -24);
 		
-		
-		
 		final Connection<Post> feedConnection = fbClient.fetchConnection("me/statuses", Post.class);
-		final ArrayList<String> statuses = new ArrayList<String>();
-
-		Calendar.getInstance();
+		final List<String> statuses = new ArrayList<String>();
 		
 		final List<Post> posts = feedConnection.getData();
 		for(final Post post : posts) {
-			System.out.println("test");
 			final Calendar statusDate = Calendar.getInstance();
 			statusDate.setTime(post.getUpdatedTime());
-			if(statusDate.before(twentyFourHoursAgo)) {
-				break;
-			}
-			else {
+			if(statusDate.after(twentyFourHoursAgo)) {
 				System.out.println(post.getMessage());
 				statuses.add(post.getMessage());
+			} else {
+				break;
 			}
 		}
 
