@@ -12,20 +12,23 @@ public class FacebookSource implements DataSource {
 	
 	FacebookClient fbClient = new DefaultFacebookClient("AAACEdEose0cBAEgKQZBFrQnyBsJBBMFoJiJ09Ff0RPW24v0r5wo5ZCIvMKIPnLOD7O1AXQdGTjLzB2EpAufW72Hbn9dlEIgLUtDxg7WPC1KZCQ81Uw4");
 	
-	public List<String> getData() {
+
+	public List<DataPoint> getData() {
 		final Calendar twentyFourHoursAgo = Calendar.getInstance();
-		twentyFourHoursAgo.add(Calendar.HOUR, -72); // TODO FIXME CDZ changed 24 to 72
+		twentyFourHoursAgo.add(Calendar.HOUR, -24);
 		
 		final Connection<Post> feedConnection = fbClient.fetchConnection("me/statuses", Post.class);
-		final List<String> statuses = new ArrayList<String>();
+		final List<DataPoint> statuses = new ArrayList<DataPoint>();
 		
 		final List<Post> posts = feedConnection.getData();
 		for(final Post post : posts) {
 			final Calendar statusDate = Calendar.getInstance();
 			statusDate.setTime(post.getUpdatedTime());
 			if(statusDate.after(twentyFourHoursAgo)) {
-				System.out.println(post.getMessage());
-				statuses.add(post.getMessage());
+				DataPoint newPoint = new DataPoint();
+				newPoint.date = statusDate;
+				newPoint.text = post.getMessage();
+				statuses.add(newPoint);
 			} else {
 				break;
 			}

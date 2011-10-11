@@ -30,11 +30,12 @@ public class TwitterSource implements DataSource {
 	 * 
 	 * blocks.
 	 */
-	public List<String> getData() {
-		final ArrayList<String> tweets = new ArrayList<String>();
+	
+	public List<DataPoint> getData() {
+		final ArrayList<DataPoint> tweets = new ArrayList<DataPoint>();
 		
 		final Calendar twentyFourHoursAgo = Calendar.getInstance();
-		twentyFourHoursAgo.add(Calendar.HOUR, -72); // TODO FIXME CDZ changed 24 to 72
+		twentyFourHoursAgo.add(Calendar.HOUR, -24);
 		
 		final Paging paging = new Paging(1, TWITTER_PAGE_COUNT);
 		boolean findMoreTweets = true;
@@ -51,8 +52,11 @@ public class TwitterSource implements DataSource {
 						findMoreTweets = false;
 						break;
 					}
-					
-					tweets.add(s.getText());
+
+					DataPoint newPoint = new DataPoint();
+					newPoint.date = tweetDate;
+					newPoint.text = s.getText();
+					tweets.add(newPoint);
 				}
 				
 				paging.setPage(paging.getPage()+1);
