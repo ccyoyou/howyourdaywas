@@ -10,7 +10,7 @@ import com.restfb.types.Post;
 
 public class FacebookSource implements DataSource {
 	
-	FacebookClient fbClient = new DefaultFacebookClient("AAACEdEose0cBAEgKQZBFrQnyBsJBBMFoJiJ09Ff0RPW24v0r5wo5ZCIvMKIPnLOD7O1AXQdGTjLzB2EpAufW72Hbn9dlEIgLUtDxg7WPC1KZCQ81Uw4");
+	FacebookClient fbClient = new DefaultFacebookClient("AAACEdEose0cBAAXi9XD4vwfshqSWgLYVziJgU8aFzGotA6fiUOboH61ZBd9C1tu9ORDZCMNIJM1tICFiXz2LqUHwUW4JS6Y0d2TcWyT70D9sLHgLmK");
 	
 
 	public List<DataPoint> getData() {
