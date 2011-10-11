@@ -13,6 +13,11 @@ public class DataPoint {
 		date = d;
 	}
 	
+	@Override
+	public String toString() {
+		return text;
+	}
+	
 	public static class DataPointComparator implements Comparator<DataPoint> {
 		public int compare(DataPoint arg0, DataPoint arg1) {
 			//if 0, dates are equal
