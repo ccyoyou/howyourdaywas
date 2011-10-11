@@ -10,7 +10,7 @@ import com.restfb.types.Post;
 
 public class FacebookSource implements DataSource {
 	
-	FacebookClient fbClient = new DefaultFacebookClient("AAACEdEose0cBAOribywQZBP7YLqBjqDD7uw1gqymDB1TSgF9sNSALbWHPGRmeWVVNag4cDCxe4b8kphOVfyWwCuwlBJHPua6GRlRgRZBYYP6vIE5dT");
+	FacebookClient fbClient = new DefaultFacebookClient("AAACEdEose0cBAEgKQZBFrQnyBsJBBMFoJiJ09Ff0RPW24v0r5wo5ZCIvMKIPnLOD7O1AXQdGTjLzB2EpAufW72Hbn9dlEIgLUtDxg7WPC1KZCQ81Uw4");
 	
 	public List<DataPoint> getData() {
 		final Calendar twentyFourHoursAgo = Calendar.getInstance();
@@ -24,9 +24,8 @@ public class FacebookSource implements DataSource {
 			final Calendar statusDate = Calendar.getInstance();
 			statusDate.setTime(post.getUpdatedTime());
 			if(statusDate.after(twentyFourHoursAgo)) {
-				System.out.println(post.getMessage());
 				DataPoint newPoint = new DataPoint();
-				newPoint.date = post.getUpdatedTime();
+				newPoint.date = statusDate;
 				newPoint.text = post.getMessage();
 				statuses.add(newPoint);
 			} else {

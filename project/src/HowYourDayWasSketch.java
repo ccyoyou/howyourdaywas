@@ -1,7 +1,11 @@
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import processing.core.PApplet;
 import edu.umich.eecs498f11.howyourdaywas.DataPoint;
+import edu.umich.eecs498f11.howyourdaywas.DataPointComparator;
 import edu.umich.eecs498f11.howyourdaywas.DataSource;
 import edu.umich.eecs498f11.howyourdaywas.FacebookSource;
 import edu.umich.eecs498f11.howyourdaywas.TwitterSource;
@@ -23,13 +27,15 @@ public class HowYourDayWasSketch extends PApplet {
 		final DataSource facebook = new FacebookSource();
 		final List<DataPoint> tweets = twitter.getData();
 		final List<DataPoint> statuses = facebook.getData();
+		final List<DataPoint> collection = facebook.getData();
+		collection.addAll(tweets);
+		DataPointComparator c = new DataPointComparator();
+		Collections.sort(collection, c);
 		
-		for (final DataPoint tweet : tweets) {
-			System.out.println(tweet.text);
+		for(final DataPoint message : collection) {
+			System.out.println(message.text);
 		}
-		for(final DataPoint status : statuses) {
-			System.out.println(status.text);
-		}
+		
 	}
 	
 	public void draw() {

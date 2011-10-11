@@ -52,7 +52,7 @@ public class TwitterSource implements DataSource {
 						break;
 					}
 					DataPoint newPoint = new DataPoint();
-					newPoint.date = s.getCreatedAt();
+					newPoint.date = tweetDate;
 					newPoint.text = s.getText();
 					tweets.add(newPoint);
 				}
