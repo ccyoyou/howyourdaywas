@@ -62,7 +62,7 @@ public class HowYourDayWasSketch extends PApplet {
 		Collections.sort(collection, c);
 		
 		for(final DataPoint message : collection) {
-			System.out.println(message.text);
+			System.out.println(eval(message.text) + ": " + message.text);
 		}
 		
 	}
