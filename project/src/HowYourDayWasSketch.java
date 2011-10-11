@@ -1,6 +1,7 @@
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -13,7 +14,6 @@ import com.aliasi.lm.NGramProcessLM;
 import com.aliasi.util.Files;
 
 import edu.umich.eecs498f11.howyourdaywas.DataPoint;
-import edu.umich.eecs498f11.howyourdaywas.DataPointComparator;
 import edu.umich.eecs498f11.howyourdaywas.DataSource;
 import edu.umich.eecs498f11.howyourdaywas.FacebookSource;
 import edu.umich.eecs498f11.howyourdaywas.TwitterSource;
@@ -29,7 +29,7 @@ public class HowYourDayWasSketch extends PApplet {
 	private File     mPolarityDir;
     private String[] mCategories;
     
-    private int mTempCount = 0;
+    private List<DataPoint> mAllPosts = new ArrayList<DataPoint>();
 
 	public static void main(String args[]) {
 		PApplet.main(new String[] { "--present", "HowYourDayWasSketch" });
@@ -38,43 +38,30 @@ public class HowYourDayWasSketch extends PApplet {
 	public void setup() {
 		mPolarityDir = new File(PATH_TO_TRAINING_DATA, "txt_sentoken");
         mCategories = mPolarityDir.list();
-
         mClassifier = DynamicLMClassifier.createNGramProcess(mCategories, mNGram);
         try {
         	trainClassifier();
         } catch(IOException e) {
         	System.err.println("IO error reading classification training data.");
-        	System.exit(1);
+        	System.exit(ExitCodes.CLASSIFIER_TRAINING_ERROR);
         }
         
-		// TODO
-		// for display, we'll likely steal a lot of the fonts and full-screen stuff from cdzombak's NoiseSketch (in processing-exercises)
-		
-		// Example Twitter usage:
 		final DataSource twitter = new TwitterSource();
 		final DataSource facebook = new FacebookSource();
 
 		final List<DataPoint> tweets = twitter.getData();
 		final List<DataPoint> statuses = facebook.getData();
-		final List<DataPoint> collection = facebook.getData();
-		collection.addAll(tweets);
-		DataPointComparator c = new DataPointComparator();
-		Collections.sort(collection, c);
 		
-		for(final DataPoint message : collection) {
-			System.out.println(eval(message.text) + ": " + message.text);
-		}
+		mAllPosts.addAll(tweets);
+		mAllPosts.addAll(statuses);
+		Collections.sort(mAllPosts, new DataPoint.DataPointComparator());
 		
+		// TODO datavis :)
 	}
 
 	public void draw() {
 		// TODO
 	}
-	
-	private String eval(String status_tweet) {
-        Classification classification = mClassifier.classify(status_tweet);
-        return classification.bestCategory();
-    }
 	
 	private void trainClassifier() throws IOException {
         int numTrainingCases = 0;
@@ -82,25 +69,45 @@ public class HowYourDayWasSketch extends PApplet {
         
         System.out.println("\nTraining...");
         
-        for (int i = 0; i < mCategories.length; ++i) {
-            String category = mCategories[i];
-            Classification classification
-                = new Classification(category);
-            File file = new File(mPolarityDir,mCategories[i]);
-            File[] trainFiles = file.listFiles();
-            for (int j = 0; j < trainFiles.length; ++j) {
-                File trainFile = trainFiles[j];
+        for (final String category : mCategories) {
+            final Classification classification = new Classification(category);
+            final File file = new File(mPolarityDir, category);
+            
+            final File[] trainFiles = file.listFiles();
+            for (final File trainFile : trainFiles) {
                 ++numTrainingCases;
-                String review = Files.readFromFile(trainFile,"ISO-8859-1");
+                final String review = Files.readFromFile(trainFile,"ISO-8859-1");
                 numTrainingChars += review.length();
-                Classified<CharSequence> classified
-                    = new Classified<CharSequence>(review,classification);
+                final Classified<CharSequence> classified = new Classified<CharSequence>(review, classification);
                 mClassifier.handle(classified);
             }
         }
         
-        System.out.println("  # Training Cases=" + numTrainingCases);
-        System.out.println("  # Training Chars=" + numTrainingChars);
+        System.out.println("  # Training Cases = " + numTrainingCases);
+        System.out.println("  # Training Chars = " + numTrainingChars);
     }
 	
+	private Sentiment evalMessage(final String message) {
+        final Classification classification = mClassifier.classify(message);
+        final String bestCategory = classification.bestCategory();
+        
+        if (bestCategory.equals("neg")) {
+        	return Sentiment.NEGATIVE;
+        } else if (bestCategory.equals("pos")) {
+        	return Sentiment.POSITIVE;
+        } else if (bestCategory.equals("u")) {
+        	return Sentiment.NEUTRAL;
+        } else {
+        	System.err.println("Unknown sentiment found: " + bestCategory);
+        	return Sentiment.NEUTRAL;
+        }
+    }
+	
+	private enum Sentiment {
+		POSITIVE, NEUTRAL, NEGATIVE
+	}
+	
+	private final class ExitCodes {
+		public static final int CLASSIFIER_TRAINING_ERROR = 1;
+	}
 }

@@ -30,7 +30,6 @@ public class TwitterSource implements DataSource {
 	 * 
 	 * blocks.
 	 */
-	
 	public List<DataPoint> getData() {
 		final ArrayList<DataPoint> tweets = new ArrayList<DataPoint>();
 		
@@ -53,10 +52,7 @@ public class TwitterSource implements DataSource {
 						break;
 					}
 
-					DataPoint newPoint = new DataPoint();
-					newPoint.date = tweetDate;
-					newPoint.text = s.getText();
-					tweets.add(newPoint);
+					tweets.add(new DataPoint(s.getText(), tweetDate));
 				}
 				
 				paging.setPage(paging.getPage()+1);
@@ -71,6 +67,6 @@ public class TwitterSource implements DataSource {
 	}
 
 	public static class ExitCodes {
-		public static final int TWITTER_ERROR = 1;
+		public static final int TWITTER_ERROR = 2;
 	}
 }
