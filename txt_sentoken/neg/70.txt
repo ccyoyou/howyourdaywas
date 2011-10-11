@@ -1,0 +1,1 @@
+Apache's Java HTTP library is *painfully* overcomplicated. I can usually see the reasoning behind these architectures, but this? No. No.

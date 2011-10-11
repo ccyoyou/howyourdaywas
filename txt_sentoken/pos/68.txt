@@ -1,0 +1,1 @@
+@andrewa2 I was actually thinking that if we separated some of that framework from our app, it could be released as OSSÉ

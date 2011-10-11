@@ -1,0 +1,1 @@
+@kylelady Right. But you need to learn basic stuff (branches, merging, push/pull, stage/commit, etc) *before* you can even learn by doing.

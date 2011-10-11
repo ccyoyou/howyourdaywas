@@ -1,0 +1,1 @@
+Done dealing with the Apache Java HTTP library for now. Can't help thinking it would've been easier in ARM assembly (or Dalvik bytecode).

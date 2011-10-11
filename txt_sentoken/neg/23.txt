@@ -1,0 +1,1 @@
+@kylelady The last thing I want to do on a deadline for a group project is teach everyone in the group how to use Git, push vs merge, etc.

@@ -1,0 +1,1 @@
+It seems that this @Delicious update completely broke the Chrome extension. Did they test the new version at all?

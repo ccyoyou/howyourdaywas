@@ -1,0 +1,1 @@
+.@UMengineering if you expect us to do group projects, you *need* to teach everyone how to use a reasonable VCS.

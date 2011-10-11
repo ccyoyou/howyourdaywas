@@ -1,0 +1,1 @@
+@misterding depends how the card readerbis connected...I bet that's the real bottleneck, not the HDD. Editing will be faster though.

@@ -1,0 +1,1 @@
+What's the preferred way to manage your Python dev env on OS X (like rvm)? Just virtualenv? virtualenv-burrito? pythonbrew?
