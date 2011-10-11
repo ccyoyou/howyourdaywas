@@ -10,7 +10,7 @@ import com.restfb.types.Post;
 
 public class FacebookSource implements DataSource {
 	
-	private final static String FB_ACCESS_TOKEN = "AAACEdEose0cBAAXi9XD4vwfshqSWgLYVziJgU8aFzGotA6fiUOboH61ZBd9C1tu9ORDZCMNIJM1tICFiXz2LqUHwUW4JS6Y0d2TcWyT70D9sLHgLmK";
+	private final static String FB_ACCESS_TOKEN = "AAACEdEose0cBANHdb2noDklmzK29tMZArQiie7TwZCVDRRBZCgVbbre5KcN2ZAq4ZAsJRdqZA4EYH324uZC3f10OZCapbZAgGmRuqDDp2O61ZBsMWKrdUfMXkc";
 	
 	private final FacebookClient fbClient = new DefaultFacebookClient(FB_ACCESS_TOKEN);
 	
