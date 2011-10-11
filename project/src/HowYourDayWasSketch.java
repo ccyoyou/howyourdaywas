@@ -1,6 +1,7 @@
 import java.util.List;
 
 import processing.core.PApplet;
+import edu.umich.eecs498f11.howyourdaywas.DataPoint;
 import edu.umich.eecs498f11.howyourdaywas.DataSource;
 import edu.umich.eecs498f11.howyourdaywas.FacebookSource;
 import edu.umich.eecs498f11.howyourdaywas.TwitterSource;
@@ -20,14 +21,14 @@ public class HowYourDayWasSketch extends PApplet {
 		// Example Twitter usage:
 		final DataSource twitter = new TwitterSource();
 		final DataSource facebook = new FacebookSource();
-		final List<String> tweets = twitter.getData();
-		final List<String> statuses = facebook.getData();
+		final List<DataPoint> tweets = twitter.getData();
+		final List<DataPoint> statuses = facebook.getData();
 		
-		for (final String tweet : tweets) {
-			System.out.println(tweet);
+		for (final DataPoint tweet : tweets) {
+			System.out.println(tweet.text);
 		}
-		for(final String status : statuses) {
-			System.out.println(status);
+		for(final DataPoint status : statuses) {
+			System.out.println(status.text);
 		}
 	}
 	

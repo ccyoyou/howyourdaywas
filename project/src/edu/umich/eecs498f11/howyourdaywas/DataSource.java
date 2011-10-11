@@ -17,5 +17,5 @@ public interface DataSource {
 	 * 
 	 * @return
 	 */
-	public List<String> getData();
+	public List<DataPoint> getData();
 }
